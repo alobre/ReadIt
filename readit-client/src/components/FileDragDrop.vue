@@ -32,6 +32,7 @@
         <!-- </div> -->
     <!-- </div> -->
     <!-- </v-card> -->
+
 </template>
 
 <script>
@@ -97,37 +98,36 @@ import axios from 'axios'
                 this.upload(this.assignImageToUser)
             },
             assignImageToUser(imageURL, ocrText) {
+                this.$store.state.loading = false;
                 this.$store.state.ocrText = ocrText
                 this.$store.state.imgSrc = imageURL
-            // if (firebase.auth().currentUser && this.file.type == "image/png" || firebase.auth().currentUser && this.file.type == "image/jpeg") {
                 let db = firebase.firestore()
                 db.collection('users')
                 .doc(firebase.auth().currentUser.providerData[0].uid)
                 .get().then(data => {
                     console.log(data.data(), imageURL, ocrText);
-
                     let ocrArr = []
                     if(data.ocr){
-                        ocrArr = data.ocr.push({imageURL, ocrText})
+                        ocrArr = data.ocr
+                        ocrArr.push({imageURL, ocrText})
+
                     } else {
                         ocrArr = [{imageURL, ocrText}]
                     }
                     console.log(ocrArr);
                     db.collection('users')
-                    .doc(firebase.auth().currentUser.providerData[0].uid)
+                    .doc(firebase.ocrArr().currentUser.providerData[0].uid)
                     .update('ocr', ocrArr)
                 })
-            // }
             },
             async upload(assignImageToUser) {
-                this.isDisabeled = true;
+                this.$store.state.loading = true;
                 let storageRef = firebase.storage().ref();
                 var mountainImagesRef = storageRef.child("images/" + this.fileName);
                 mountainImagesRef.put(this.file).then(function(res) {
                     storageRef.child(res.ref.fullPath).getDownloadURL().then(async url=>{
                         let ocr = await axios.post('http://localhost:3000/ocr', {url})
                         assignImageToUser(url, ocr.data)
-                        this.isDisabeled = false;
                     })
                 });
             },

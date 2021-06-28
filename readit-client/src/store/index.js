@@ -6,7 +6,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     ocrText: '',
-    imgSrc: ''
+    imgSrc: '',
+    loading: false,
+    loggedIn: false,
+    photoURL: ''
   },
   mutations: {
   },

@@ -96,7 +96,7 @@
             },
         },
         mounted () {
-            
+            this.$store.state.photoURL = firebase.auth().currentUser.photoURL;
         },
     }
 </script>

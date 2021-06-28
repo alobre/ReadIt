@@ -30,19 +30,30 @@
         
       <FileDragDrop id="fileInput"/>
       </v-card>
-      
+       <v-overlay
+          :absolute="absolute"
+          :value="this.$store.state.loading"
+        >
+        <v-progress-circular
+        indeterminate
+        size="64"
+        ></v-progress-circular>
+        </v-overlay>
     </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import firebase from "firebase";
 import FileDragDrop from '../components/FileDragDrop.vue'
 export default {
   components: {
     FileDragDrop
   },
+
   mounted () {
+    firebase.auth().currentUser.uid ? this.$store.state.loggedIn = true : this.$store.state.loggedIn = false
   },
 }
 </script>

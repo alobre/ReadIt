@@ -1,7 +1,7 @@
 <template>
   <div>
-    <LogoutIcon id="logoutIcon" v-bind:class="[userState ? 'visible' : 'invisible']"></LogoutIcon>
-    <LoginIcon id="loginIcon" v-bind:class="[userState ? 'invisible' : 'visible']"></LoginIcon>
+    <LogoutIcon id="logoutIcon" v-bind:class="[this.$store.state.loggedIn ? 'visible' : 'invisible']"></LogoutIcon>
+    <LoginIcon id="loginIcon" v-bind:class="[this.$store.state.loggedIn ? 'invisible' : 'visible']"></LoginIcon>
     
   </div>
 </template>
@@ -24,7 +24,8 @@ import LogoutIcon from './LogoutIcon'
     methods: {
       state() {
         console.log('LOGGEDIN: ', firebase.auth().currentUser);
-        firebase.auth().currentUser.uid ? this.userState = true : this.userState = false
+        firebase.auth().currentUser.uid ? this.$store.state.loggedIn = true : this.$store.state.loggedIn = false
+         this.$store.state.photoURL = firebase.auth().currentUser.photoURL;
       },
   },
   created() {
