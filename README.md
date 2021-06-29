@@ -16,4 +16,4 @@ To install Vue run ```npm install -g @vue/cli``` or ```yarn global add @vue/cli`
 #### Developmend mode
 Run ```npm run serve``` to start the Client in development mode. In this mode, the app will be rendered each time there are changes in the code. If initializied correctly, the Website can be accessed at ```http://localhost:8080```
 #### Build project
-Run ```npm run build``` to build the Code. The code gets now built into vanilla html / js / css code. The built version is now in the ```public/``` directory and can be hosted on an FTP-Server.
+Run ```npm run build``` to build the Code. The code gets now built into vanilla html / js / css code. The built version is now in the ```dist/``` directory and can be hosted on an FTP-Server. To run the Website install serve with ```npm install -g serve``` and deploy it with ```serve -s dist```
